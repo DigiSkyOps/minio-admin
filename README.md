@@ -11,8 +11,8 @@ minio-admin 是一个用于 minio 用户及策略的管理工具，由 minio 原
 
 
 ## 项目结构
-- 前端源码是该目录下的 minio-admin-fed，前端详细介绍地址：https://github.com/DigiSkyOps/minio-admin/minio-admin-fed
-- 后端源码是该目录下的 minio-admin-platform，后端详细介绍地址：https://github.com/minio-admin-platform
+- 前端源码是该目录下的 minio-admin-fed。
+- 后端源码是该目录下的 minio-admin-platform。
 
 
 ## 项目部署
