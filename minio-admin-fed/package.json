@@ -1,0 +1,42 @@
+{
+    "name": "starter",
+    "version": "1.0.0",
+    "description": "Nuxt.js project",
+    "author": "Ekko_liu <liuhuibin@digisky.com>",
+    "private": true,
+    "config": {
+        "nuxt": {
+            "host": "0.0.0.0",
+            "port": "8000"
+        }
+    },
+    "scripts": {
+        "dev": "nuxt -c nuxt.dev.config.js",
+        "build": "nuxt build -c nuxt.prod.config.js",
+        "start": "nuxt start -c nuxt.prod.config.js",
+        "generate": "nuxt generate -c nuxt.prod.config.js"
+    },
+    "dependencies": {
+        "@nuxtjs/axios": "^5.1.1",
+        "@nuxtjs/component-cache": "^1.1.1",
+        "@nuxtjs/proxy": "^1.1.4",
+        "ant-design-vue": "^1.4.12",
+        "editorconfig": "^0.15.3",
+        "element-ui": "~2.10.1",
+        "js-base64": "^2.5.2",
+        "json-beautify": "^1.1.1",
+        "nuxt": "^2.6.3",
+        "v-jsoneditor": "^1.2.3",
+        "vue-json-editor": "^1.4.0",
+        "vue-json-ui-editor": "^1.0.0",
+        "vue-json-viewer": "^2.2.10",
+        "vuex-persistedstate": "^2.5.4"
+    },
+    "devDependencies": {
+        "axios-retry": "3.0.2",
+        "less": "^3.10.3",
+        "less-loader": "^5.0.0",
+        "vue-loader": "^15.7.1",
+        "webpack-merge": "^4.1.2"
+    }
+}

@@ -1,0 +1,12 @@
+node_modules
+.editorconfig
+.gitattributes
+.gitignore
+.dockerignore
+DockerFile
+README.md
+yarn-error.log
+dist
+build
+.nuxt
+server/log

@@ -1,0 +1,54 @@
+* {
+	margin: 0;
+	padding: 0;
+}
+
+html, body
+{
+  font-family: "microsoft yahei", Arial, sans-serif;
+}
+
+::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+}
+
+::-webkit-scrollbar-track-piece {
+    background-color: rgba(0, 0, 0, 0.2);
+    -webkit-border-radius: 6px;
+}
+
+::-webkit-scrollbar-thumb:vertical {
+    height: 5px;
+    background-color: rgba(125, 125, 125, 0.7);
+    -webkit-border-radius: 6px;
+}
+
+::-webkit-scrollbar-thumb:horizontal {
+    width: 5px;
+    background-color: rgba(125, 125, 125, 0.7);
+    -webkit-border-radius: 6px;
+}
+
+.mb20 {
+	margin-bottom: 20px;
+}
+
+textarea {
+	font-family: Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei, SimSun, sans-serif;
+}
+.edui-toolbar {
+    line-height: 20px !important;
+}
+section{
+    width: 100%;
+}
+.line {text-align: center;}
+.link {
+    cursor: pointer;
+    color: #409EFF;
+    text-decoration: none;
+}
+.icon-success{
+    color: green;
+}
