@@ -38,7 +38,7 @@ $ docker run -itd --name minio-admin-fed -p 8000:8000   minio-admin-fed
 - Open Browser
 ```
 
-Use your browser to open localhost8000
+Use your browser to open localhost:8000
 
 ```
 
