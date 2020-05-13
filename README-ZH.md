@@ -47,3 +47,6 @@ $ docker run -itd --name minio-admin-fed -p  80:8000   minio-admin-fed
 -  minio 官网：https://min.io/
 - 开源地址：https://github.com/minio/
 - 中文文档：https://docs.min.io/cn/
+
+## 开源证书
+该项目基于Apache 2.0 license

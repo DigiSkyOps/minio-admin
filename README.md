@@ -46,3 +46,7 @@ Use your browser to open localhost8000
 
 - minio ：https://min.io/
 - github：https://github.com/minio/
+
+
+## Licensing
+minio-admin is under the Apache 2.0 license.
