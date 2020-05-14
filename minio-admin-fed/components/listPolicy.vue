@@ -6,13 +6,13 @@
                 <a-button type="primary"
                           style="margin-left: 8px"
                           :disabled="!hasSelected"
-                          :loading="loading">批量删除
+                          :loading="loading">{{$t("batch_delete")}}
                 </a-button>
             </a-popconfirm>
             <a-button type="primary"
                       style="margin-left: 8px"
                       @click="add"
-                      :disabled="hasSelected">添加策略
+                      :disabled="hasSelected">{{$t("add_policy")}}
             </a-button>
         </div>
         <a-table :rowSelection="{selectedRowKeys: selectedRowKeys, onChange: onSelectChange}"
@@ -23,23 +23,6 @@
             <template slot="name"
                       slot-scope="text, record, index">
                 {{text}}
-            </template>
-            <template slot="content"
-                      slot-scope="text">
-                <!-- <json-viewer :value="decode(text)"
-                             :expand-depth="0"
-                             copyable
-                             sort> -->
-                <!-- <template slot="copy"> -->
-                <span>
-                    <a-button type="primary"
-                              style="font-family: Arial;"
-                              size="small"
-                              @click="() => detail(text)">查看详情
-                    </a-button>
-                </span>
-                <!-- </template> -->
-                <!-- </json-viewer> -->
             </template>
             <template slot="bindeduser"
                       slot-scope="text, record, index">
@@ -55,22 +38,29 @@
                 <div class="editable-row-operations">
                     <span>
                         <a-button type="primary"
+                                style="font-family: Arial;"
+                                size="small"
+                                @click="() => detail(record)">{{$t("detail")}}
+                        </a-button>
+                    </span>
+                    <span>
+                        <a-button type="primary"
                                   size="small"
-                                  @click="() => edit(record,text,'editPolicy')">编辑策略
+                                  @click="() => edit(record,text,'editPolicy')">{{$t("edit_policy")}}
                         </a-button>
                     </span>
                     <a-popconfirm v-if="users.length"
                                   title="Sure to delete?"
                                   @confirm="() => onDelete(record.key)">
                         <a-button type="danger"
-                                  size="small">删除策略
+                                  size="small">{{$t("delete_policy")}}
                         </a-button>
                     </a-popconfirm>
                 </div>
             </template>
         </a-table>
         <div>
-            <a-modal title="策略详情"
+            <a-modal :title="$t('policy_detail')"
                      v-model="detailVisible"
                      :footer="null">
                 <json-viewer :value="decode(detailContent)"
@@ -117,35 +107,32 @@ export default {
         "edit-policy": () => import("./editPolicy")
     },
     mixins: [common],
+    created() {
+        this.columns = [
+            {
+                title: this.$t("policy_name"),
+                dataIndex: "name",
+                width: "20%",
+                scopedSlots: { customRender: "name" },
+                sorter: (a, b) => a.name.length - b.name.length,
+                sortDirections: ["descend"]
+            },
+            {
+                title: this.$t("username"),
+                dataIndex: "bindeduser",
+                scopedSlots: { customRender: "bindeduser" }
+            },
+            {
+                title: this.$t("operation"),
+                dataIndex: "operation",
+                width: "35%",
+                scopedSlots: { customRender: "operation" }
+            }
+        ]
+    },
     data() {
         return {
-            columns: [
-                {
-                    title: "策略名称",
-                    dataIndex: "name",
-                    width: "20%",
-                    scopedSlots: { customRender: "name" },
-                    sorter: (a, b) => a.name.length - b.name.length,
-                    sortDirections: ["descend"]
-                },
-                {
-                    title: "策略内容",
-                    dataIndex: "content",
-                    width: "10%",
-                    scopedSlots: { customRender: "content" }
-                },
-                {
-                    title: "已绑定用户",
-                    dataIndex: "bindeduser",
-                    width: "20%",
-                    scopedSlots: { customRender: "bindeduser" }
-                },
-                {
-                    title: "操作",
-                    dataIndex: "operation",
-                    scopedSlots: { customRender: "operation" }
-                }
-            ],
+            columns: [],
             detailContent: 'eyJWZXJzaW9uIjoiMjAxMi0xMC0xNyIsIlN0YXRlbWVudCI6W3siRWZmZWN0IjoiQWxsb3ciLCJBY3Rpb24iOlsiczM6KiJdLCJSZXNvdXJjZSI6WyJhcm46YXdzOnMzOjo6bnh4LW4vKiJdfV19',
             detailVisible: false,
             drawerVisible: false,
@@ -195,9 +182,9 @@ export default {
         hideModal() {
             this.visible = false;
         },
-        detail(text) {
+        detail(obj) {
             this.detailVisible = true
-            this.detailContent = text
+            this.detailContent = obj.content
         },
         async handleFinishEditPolicy() {
             this.handleCloseDrawer();

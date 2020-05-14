@@ -7,14 +7,14 @@
                          :label-position="labelPosition"
                          label-width="100px"
                          ref="addPolicy">
-                    <el-form-item label="策略名称"
+                    <el-form-item :label="$t('policy_name')"
                                   prop="name">
                         <el-input style="width:300px"
                                   @input="validation('addPolicy')"
                                   v-model="addPolicyData.name">
                         </el-input>
                     </el-form-item>
-                    <el-form-item label="自定义编写">
+                    <el-form-item :label="$t('policy_custom')">
                         <el-switch v-model="customEdit"
                                    @change="changeEdit"></el-switch>
                     </el-form-item>
@@ -25,54 +25,56 @@
                         </el-button>
                     </el-form-item>
 
-                    <div v-if="!customEdit"
-                         v-for="(item,index) in addPolicyData.rules"
-                         :key="index"
-                         class="rule-item">
-                        <el-button @click="delRule(index)">
-                            <span class="darken"><i class="iconfont icon-jian"></i></span>
-                        </el-button>
-                        <el-form :model="item"
-                                 :rules="rules"
-                                 v-if="!customEdit"
-                                 :label-position="labelPosition"
-                                 label-width="80px"
-                                 :ref="'rule'+ index">
-                            <el-form-item prop="bucket"
-                                          label="存储桶">
-                                <el-select v-model="item.bucket"
-                                           @change="validation('addPolicy')"
-                                           placeholder="请选择存储桶">
-                                    <el-option v-for="item in buckets"
-                                               :key="item"
-                                               :label="item"
-                                               :value="item">
-                                    </el-option>
-                                </el-select>
-                            </el-form-item>
-                            <el-form-item label="路径"
-                                          prop="path">
-                                <el-input style="width:300px"
-                                          @input="validation('addPolicy')"
-                                          v-model="item.path">
-                                </el-input>
-                            </el-form-item>
-                            <el-form-item prop="action"
-                                          label="Action">
-                                <el-radio-group v-model="item.action">
-                                    <el-radio label="readonly"></el-radio>
-                                    <el-radio label="writeonly"></el-radio>
-                                    <el-radio label="readwrite"></el-radio>
-                                </el-radio-group>
-                            </el-form-item>
-                            <el-form-item prop="effect"
-                                          label="Effect">
-                                <el-radio-group v-model="item.effect">
-                                    <el-radio label="Allow"></el-radio>
-                                    <el-radio label="Deny"></el-radio>
-                                </el-radio-group>
-                            </el-form-item>
-                        </el-form>
+                    <div v-if="!customEdit">
+                        <div
+                            v-for="(item,index) in addPolicyData.rules"
+                            :key="index"
+                            class="rule-item">
+                            <el-button @click="delRule(index)">
+                                <span class="darken"><i class="iconfont icon-jian"></i></span>
+                            </el-button>
+                            <el-form :model="item"
+                                    :rules="rules"
+                                    v-if="!customEdit"
+                                    :label-position="labelPosition"
+                                    label-width="80px"
+                                    :ref="'rule'+ index">
+                                <el-form-item prop="bucket"
+                                            :label="$t('bucket')">
+                                    <el-select v-model="item.bucket"
+                                            @change="validation('addPolicy')"
+                                            :placeholder="$t('rule_bucket')">
+                                        <el-option v-for="item in buckets"
+                                                :key="item"
+                                                :label="item"
+                                                :value="item">
+                                        </el-option>
+                                    </el-select>
+                                </el-form-item>
+                                <el-form-item :label="$t('path')"
+                                            prop="path">
+                                    <el-input style="width:300px"
+                                            @input="validation('addPolicy')"
+                                            v-model="item.path">
+                                    </el-input>
+                                </el-form-item>
+                                <el-form-item prop="action"
+                                            label="Action">
+                                    <el-radio-group v-model="item.action">
+                                        <el-radio label="readonly"></el-radio>
+                                        <el-radio label="writeonly"></el-radio>
+                                        <el-radio label="readwrite"></el-radio>
+                                    </el-radio-group>
+                                </el-form-item>
+                                <el-form-item prop="effect"
+                                            label="Effect">
+                                    <el-radio-group v-model="item.effect">
+                                        <el-radio label="Allow"></el-radio>
+                                        <el-radio label="Deny"></el-radio>
+                                    </el-radio-group>
+                                </el-form-item>
+                            </el-form>
+                        </div>
                     </div>
 
                     <el-form-item v-if="customEdit">
@@ -89,13 +91,13 @@
                 <div class="dialog-footer">
                     <el-button :disabled="!addPolicyValid"
                                type="primary"
-                               @click="addPolicy">确 定
+                               @click="addPolicy">{{$t('confirm')}}
                     </el-button>
                     <el-button :disabled="isAddPolicy"
-                               @click="resetData('addPolicy')">重置
+                               @click="resetData('addPolicy')">{{$t('reset')}}
                     </el-button>
                     <el-button :disabled="isAddPolicy"
-                               @click="$emit('cancel')">取 消
+                               @click="$emit('cancel')">{{$t('cancel')}}
                     </el-button>
                 </div>
             </el-card>
@@ -105,7 +107,7 @@
             <el-card class="box-card">
                 <div slot="header"
                      class="clearfix">
-                    <span>策略内容</span>
+                    <span>{{$t("policy_info")}}</span>
                 </div>
                 <pre class="json">{{ jsonString }}</pre>
             </el-card>
@@ -285,7 +287,8 @@ export default {
             this.validateRule()
         },
         async delRule(index) {
-            eval(`this.addPolicyData.rules.splice(index,1)`)
+            // eval(`this.addPolicyData.rules.splice(index,1)`)
+            this.addPolicyData.rules.splice(index,1)
             await this.validation("addPolicy")
             await this.validateRule()
         },

@@ -4,21 +4,20 @@
                  :rules="rules"
                  label-width="100px"
                  ref="editPolicy">
-            <el-form-item label="策略名称"
+            <el-form-item :label="$t('policy_name')"
                           prop="name">
                 <el-input style="width:300px"
                           @input="validation('editPolicy')"
                           v-model="editPolicyData.name">
                 </el-input>
             </el-form-item>
-            <el-form-item>
-                <template>
-                    <v-jsoneditor v-model="editPolicyData.content"
-                                  :options="jsonOptions"
-                                  :plus="false"
-                                  height="400px">
-                    </v-jsoneditor>
-                </template>
+            <el-form-item :label="$t('policy_detail')">
+                <v-jsoneditor
+                    v-model="editPolicyData.content"
+                    :options="jsonOptions"
+                    :plus="false"
+                    height="400px">
+                </v-jsoneditor>
             </el-form-item>
         </el-form>
 
@@ -27,20 +26,19 @@
             <el-button :loading="isEditPolicy"
                        :disabled="!editPolicyValid"
                        type="primary"
-                       @click="save">保存
+                       @click="save">{{$t("confirm")}}
             </el-button>
             <el-button :disabled="isEditPolicy"
-                       @click="resetData('editPolicy')">重置
+                       @click="resetData('editPolicy')">{{$t("reset")}}
             </el-button>
             <el-button :disabled="isEditPolicy"
-                       @click="$emit('cancel')">取 消
+                       @click="$emit('cancel')">{{$t("cancel")}}
             </el-button>
         </div>
     </div>
 </template>
 
 <script>
-import { Base64 } from "js-base64";
 import { common } from '../mixin/common'
 import { mapActions, mapGetters } from 'vuex'
 import api from "../api/index"
@@ -50,16 +48,7 @@ export default {
     props: { editName: { type: String, default: "" }, bindedUser: { type: String, default: "" }, editDataContent: { type: Object, default: {} } },
     data() {
         return {
-            rules: {
-                name: [
-                    {
-                        type: "string",
-                        required: true,
-                        message: "请输入策略名称",
-                        trigger: "change"
-                    }
-                ],
-            },
+            rules: {},
             editPolicyValid: false,
             isEditPolicy: false,
             editPolicyData: {
@@ -94,6 +83,18 @@ export default {
     mounted() {
         this.editPolicyData.name = this.editName
         this.editPolicyData.content = this.editDataContent
+    },
+    created() {
+        this.rules = {
+            name: [
+                {
+                    type: "string",
+                    required: true,
+                    message: this.$t("rule_policy_name"),
+                    trigger: "change"
+                }
+            ],
+        }
     },
     computed: {
         ...mapGetters({

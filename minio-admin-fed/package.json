@@ -27,6 +27,7 @@
         "json-beautify": "^1.1.1",
         "nuxt": "^2.12.2",
         "v-jsoneditor": "^1.2.3",
+        "vue-i18n": "^8.17.5",
         "vue-json-editor": "^1.4.0",
         "vue-json-ui-editor": "^1.0.0",
         "vue-json-viewer": "^2.2.10",

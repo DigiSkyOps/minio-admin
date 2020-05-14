@@ -20,7 +20,7 @@ export default {
 
 <style lang="less">
 #minio-app-index {
-    height: 100vh;
+    height: calc(100vh - 160px);
     justify-content: center;
     align-items: center;
 }

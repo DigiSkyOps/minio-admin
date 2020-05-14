@@ -6,7 +6,7 @@
                 <a-button type="primary"
                           style="margin-left: 8px"
                           :disabled="!hasSelected"
-                          :loading="loading">批量删除
+                          :loading="loading">{{$t("batch_delete")}}
                 </a-button>
             </a-popconfirm>
             <a-popconfirm title="确定批量禁用?"
@@ -14,13 +14,13 @@
                 <a-button type="primary"
                           style="margin-left: 8px"
                           :disabled="!hasSelected"
-                          :loading="loading">批量禁用
+                          :loading="loading">{{$t("batch_disable")}}
                 </a-button>
             </a-popconfirm>
             <a-button type="primary"
                       style="margin-left: 8px"
                       @click="add"
-                      :disabled="hasSelected">添加用户
+                      :disabled="hasSelected">{{$t("add_user")}}
             </a-button>
         </div>
         <a-table :rowSelection="{selectedRowKeys: selectedRowKeys, onChange: onSelectChange}"
@@ -29,7 +29,7 @@
                  bordered>
             <template v-for="col in ['name','policyName','status']"
                       :slot="col"
-                      slot-scope="text, record, index">
+                      slot-scope="text, record">
                 <div :key="col">
                     <a-input v-if="record.editable"
                              style="margin: -5px 0"
@@ -39,18 +39,18 @@
                 </div>
             </template>
             <template slot="operation"
-                      slot-scope="text, record, index">
+                      slot-scope="text, record">
                 <div class="editable-row-operations">
                     <span>
                         <a-button type="primary"
                                   size="small"
-                                  @click="() => edit(record,'changePolicy')">编辑
+                                  @click="() => edit(record,'changePolicy')">{{$t("edit")}}
                         </a-button>
                     </span>
                     <span>
                         <a-button type="primary"
                                   size="small"
-                                  @click="() => changePassword(record,'changePassword')">改密
+                                  @click="() => changePassword(record,'changePassword')">{{$t("change_password")}}
                         </a-button>
                     </span>
                     <a-popconfirm v-if="isForbid(record)"
@@ -59,7 +59,7 @@
                         <a-button v-if="isForbid(record)"
                                   :disabled="!isForbid(record)"
                                   type="danger"
-                                  size="small">禁用
+                                  size="small">{{$t("disable")}}
                         </a-button>
                     </a-popconfirm>
                     <a-popconfirm v-if="!isForbid(record)"
@@ -67,14 +67,14 @@
                                   @confirm="() => onActive(record)">
                         <a-button v-if="!isForbid(record)"
                                   type="primary"
-                                  size="small">激活
+                                  size="small">{{$t("active")}}
                         </a-button>
                     </a-popconfirm>
                     <a-popconfirm v-if="users.length"
                                   title="Sure to delete?"
                                   @confirm="() => onDelete(record.key)">
                         <a-button type="danger"
-                                  size="small">删除
+                                  size="small">{{$t("delete")}}
                         </a-button>
                     </a-popconfirm>
                 </div>
@@ -133,33 +133,7 @@ export default {
                     next: "next"
                 }
             },
-            columns: [
-                {
-                    title: "用户名",
-                    dataIndex: "name",
-                    width: "25%",
-                    scopedSlots: { customRender: "name" },
-                    sorter: (a, b) => a.name.length - b.name.length,
-                    sortDirections: ["descend"]
-                },
-                {
-                    title: "绑定策略",
-                    dataIndex: "policyName",
-                    width: "25%",
-                    scopedSlots: { customRender: "policyName" }
-                },
-                {
-                    title: "状态",
-                    dataIndex: "status",
-                    width: "25%",
-                    scopedSlots: { customRender: "status" }
-                },
-                {
-                    title: "操作",
-                    dataIndex: "operation",
-                    scopedSlots: { customRender: "operation" }
-                }
-            ],
+            columns: [],
             drawerVisible: false,
             doing: false,
             editingKey: "",
@@ -169,6 +143,34 @@ export default {
             editData: {},
             changePasswordData: {}
         };
+    },
+    created() {
+        this.columns = [{
+            title: this.$t("username"),
+            dataIndex: "name",
+            width: "25%",
+            scopedSlots: { customRender: "name" },
+            sorter: (a, b) => a.name.length - b.name.length,
+            sortDirections: ["descend"]
+        },
+        {
+            title: this.$t("binding_policy"),
+            dataIndex: "policyName",
+            width: "25%",
+            scopedSlots: { customRender: "policyName" }
+        },
+        {
+            title: this.$t("state"),
+            dataIndex: "status",
+            width: "15%",
+            scopedSlots: { customRender: "status" }
+        },
+        {
+            title: this.$t("operation"),
+            width: "35%",
+            dataIndex: "operation",
+            scopedSlots: { customRender: "operation" }
+        }]
     },
     computed: {
         ...mapGetters({

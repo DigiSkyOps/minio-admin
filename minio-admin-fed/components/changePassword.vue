@@ -3,13 +3,13 @@
         <el-form :model="editUserData"
                  :rules="rules"
                  ref="changePassword">
-            <el-form-item label="用户名称"
+            <el-form-item :label="$t('username')"
                           prop="name">
                 <el-input v-model="editUserData.name"
                           :disabled="true">
                 </el-input>
             </el-form-item>
-            <el-form-item label="密码"
+            <el-form-item :label="$t('password')"
                           prop="password">
                 <el-input @input="validation('changePassword')"
                           v-model="editUserData.password"
@@ -21,13 +21,13 @@
             <el-button :loading="isChangePassword"
                        :disabled="!changePasswordValid"
                        type="primary"
-                       @click="saveUser">确 定
+                       @click="saveUser">{{$t('confirm')}}
             </el-button>
             <el-button :disabled="isChangePassword"
-                       @click="resetData('changePassword')">重置
+                       @click="resetData('changePassword')">{{$t('reset')}}
             </el-button>
             <el-button :disabled="isChangePassword"
-                       @click="$emit('cancel')">取 消
+                       @click="$emit('cancel')">{{$t("cancel")}}
             </el-button>
         </div>
     </div>
@@ -50,16 +50,7 @@ export default {
                 policyName: "",
                 password: ""
             },
-            rules: {
-                password: [
-                    {
-                        type: "string",
-                        required: true,
-                        message: "请输入用户新密码",
-                        trigger: "change"
-                    }
-                ]
-            }
+            rules: {}
         };
     },
     async mounted() {
@@ -68,7 +59,18 @@ export default {
         this.editUserData.policyName = this.changePasswordData.policyName;
         this.validation("changePassword");
     },
-    async created() { },
+    async created() {
+        this.rules = {
+            password: [
+                {
+                    type: "string",
+                    required: true,
+                    message: this.$t("rule_password"),
+                    trigger: "change"
+                }
+            ]
+        }
+    },
     computed: {
         ...mapGetters({
             policys: "getPolicys"
