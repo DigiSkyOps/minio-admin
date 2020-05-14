@@ -58,6 +58,7 @@ module.exports = {
         { src: '~/plugins/localStorage', ssr: false },
         { src: '~/plugins/ant-ui', ssr: true },
         { src: '~/plugins/json-view', ssr: true },
-        { src: '~/plugins/v-jsoneditor', ssr: true }
+        { src: '~/plugins/v-jsoneditor', ssr: true },
+        { src: '~/plugins/i18n', ssr: true },
     ],
 }

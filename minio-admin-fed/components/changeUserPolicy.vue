@@ -3,13 +3,13 @@
         <el-form :model="editUserData"
                  :rules="rules"
                  ref="changePolicy">
-            <el-form-item label="用户名称"
+            <el-form-item :label="$t('username')"
                           prop="name">
                 <el-input v-model="editUserData.name"
                           :disabled="true">
                 </el-input>
             </el-form-item>
-            <el-form-item label="绑定策略"
+            <el-form-item :label="$t('binding_policy')"
                           style="height: 77vh;overflow-y: scroll">
                 <a-table :columns="columns"
                          :dataSource="policys"
@@ -28,7 +28,7 @@
                             <a-button type="primary"
                                       style="font-family: Arial;"
                                       size="small"
-                                      @click="() => detail(text)">查看详情
+                                      @click="() => detail(text)">{{$t("detail")}}
                             </a-button>
                         </span>
                     </template>
@@ -39,17 +39,17 @@
             <el-button :loading="isChangePolicy"
                        :disabled="!editUserValid"
                        type="primary"
-                       @click="changePolicy">确 定
+                       @click="changePolicy">{{$t("confirm")}}
             </el-button>
             <el-button :disabled="isChangePolicy"
-                       @click="resetData">重置
+                       @click="resetData">{{$t("reset")}}
             </el-button>
             <el-button :disabled="isChangePolicy"
-                       @click="$emit('cancel')">取 消
+                       @click="$emit('cancel')">{{$t("cancel")}}
             </el-button>
         </div>
         <div>
-            <a-modal title="策略详情"
+            <a-modal :title="$t('policy_detail')"
                      v-model="detailVisible"
                      :footer="null">
                 <json-viewer :value="decode(detailContent)"
@@ -71,21 +71,7 @@ export default {
     props: { editData: { type: Object, default: {} } },
     data() {
         return {
-            columns: [
-                {
-                    title: "策略名称",
-                    dataIndex: "name",
-                    key: "name",
-                    slots: { title: "customTitle" },
-                    scopedSlots: { customRender: "name" }
-                },
-                {
-                    title: "策略",
-                    dataIndex: "content",
-                    scopedSlots: { customRender: "content" },
-                    key: "content"
-                }
-            ],
+            columns: [],
             selectedRowKeys: [],
             isChangePolicy: false,
             editUserValid: false,
@@ -109,6 +95,21 @@ export default {
         };
     },
     async mounted() {
+        this.columns = [
+            {
+                title: this.$t("policy_name"),
+                dataIndex: "name",
+                key: "name",
+                slots: { title: "customTitle" },
+                scopedSlots: { customRender: "name" }
+            },
+            {
+                title: this.$t("operation"),
+                dataIndex: "content",
+                scopedSlots: { customRender: "content" },
+                key: "content"
+            }
+        ]
         this.editUserData.name = this.editData.name;
         this.editUserData.status = this.editData.status;
         this.editUserData.policyName = this.editData.policyName;

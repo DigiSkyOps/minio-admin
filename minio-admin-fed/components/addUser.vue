@@ -3,13 +3,13 @@
         <el-form :model="addUserData"
                  :rules="rules"
                  ref="addUser">
-            <el-form-item label="用户名称"
+            <el-form-item :label="$t('username')"
                           prop="name">
                 <el-input @input="validation('addUser')"
                           v-model="addUserData.name">
                 </el-input>
             </el-form-item>
-            <el-form-item label="密码"
+            <el-form-item :label="$t('password')"
                           prop="password">
                 <el-input @input="validation('addUser')"
                           v-model="addUserData.password"
@@ -20,13 +20,13 @@
         <div class="dialog-footer">
             <el-button :disabled="!addUserValid"
                        type="primary"
-                       @click="addUser">确 定
+                       @click="addUser">{{$t("confirm")}}
             </el-button>
             <el-button :disabled="isAddUser"
-                       @click="resetData('addUser')">重置
+                       @click="resetData('addUser')">{{$t("reset")}}
             </el-button>
             <el-button :disabled="isAddUser"
-                       @click="$emit('cancel')">取 消
+                       @click="$emit('cancel')">{{$t("cancel")}}
             </el-button>
         </div>
     </div>
@@ -46,30 +46,32 @@ export default {
                 name: "",
                 password: ""
             },
-            rules: {
-                name: [
-                    {
-                        type: "string",
-                        required: true,
-                        message: "请输入用户名",
-                        trigger: "change"
-                    }
-                ],
-                password: [
-                    {
-                        type: "string",
-                        required: true,
-                        message: "请输入用户密码",
-                        trigger: "change"
-                    }
-                ]
-            }
+            rules: {}
         };
     },
     async mounted() {
         this.validation("addUser");
     },
-    async created() { },
+    async created() {
+        this.rules = {
+            name: [
+                {
+                    type: "string",
+                    required: true,
+                    message: this.$t("rule_username"),
+                    trigger: "change"
+                }
+            ],
+            password: [
+                {
+                    type: "string",
+                    required: true,
+                    message: this.$t("rule_password"),
+                    trigger: "change"
+                }
+            ]
+        }
+    },
     computed: {
         ...mapGetters({
             policys: "getMinioPolicys"
