@@ -1,15 +1,9 @@
 package policy
 
 import (
-	"fmt"
 	"context"
 	"github.com/gin-gonic/gin"
-	"github.com/minio/minio/pkg/madmin"
 	"minio-admin/util"
-)
-
-var (
-	MinioClient *madmin.AdminClient
 )
 
 type AddPolicyInfo struct {
@@ -23,29 +17,12 @@ type SetPolicyInfo struct {
 	IsGroup		bool		`json:"isgroup",binding:"required"`
 }
 
-
 type DelPolicyInfo struct {
 	Name string	`json:"name",binding:"required"`
 }
 
-func init(){
-	MinioClient = initMinioClient()
-}
-
-func initMinioClient() *madmin.AdminClient{
-	madmClnt, err := madmin.New(util.Setting.MinioEndpoint,util.Setting.AccessKey, util.Setting.SecretKey,false)
-	if err != nil {
-		fmt.Println(err)
-		util.Logger.Error(err)
-	}
-	return madmClnt
-}
-
-
-
 func ListPolicy(c *gin.Context){
-	ctx := context.Background()
-	policys, err := MinioClient.ListCannedPolicies(ctx)
+	policys, err := util.MinioClient.Admin.ListCannedPolicies(context.Background())
 
 	if err != nil {
 		util.Logger.Error(err)
@@ -65,7 +42,7 @@ func GetPolicyInfo(c *gin.Context){
 	ctx := context.Background()
 	var policyName string
 	policyName = c.Query("name")
-	policyInfo, err := MinioClient.InfoCannedPolicy(ctx,policyName)
+	policyInfo, err := util.MinioClient.Admin.InfoCannedPolicy(ctx,policyName)
 
 	if err != nil {
 		util.Logger.Error(err)
@@ -95,7 +72,7 @@ func AddPolicy(c *gin.Context){
 	}
 	ctx := context.Background()
 	//policy := `{"Version":"2012-10-17","Statement":[{"Effect":"Allow","Action":["s3:*"],"Resource":["arn:aws:s3:::nxx-n/*"]}]}`
-	err := MinioClient.AddCannedPolicy(ctx,addPolicyInfo.PolicyName ,addPolicyInfo.PolicyContent)
+	err := util.MinioClient.Admin.AddCannedPolicy(ctx,addPolicyInfo.PolicyName ,addPolicyInfo.PolicyContent)
 	if err != nil {
 		util.Logger.Error(err)
 		c.JSON(200, gin.H{
@@ -123,7 +100,7 @@ func SetPolicy(c *gin.Context){
 		return
 	}
 	ctx := context.Background()
-	err := MinioClient.SetPolicy(ctx,setPolicyInfo.PolicyName ,setPolicyInfo.AccessKey,setPolicyInfo.IsGroup)
+	err := util.MinioClient.Admin.SetPolicy(ctx,setPolicyInfo.PolicyName ,setPolicyInfo.AccessKey,setPolicyInfo.IsGroup)
 	if err != nil {
 		util.Logger.Error(err)
 		c.JSON(200, gin.H{
@@ -151,7 +128,7 @@ func DelPolicy(c *gin.Context){
 		return
 	}
 	ctx := context.Background()
-	err := MinioClient.RemoveCannedPolicy(ctx,delPolicyInfo.Name)
+	err := util.MinioClient.Admin.RemoveCannedPolicy(ctx,delPolicyInfo.Name)
 	if err != nil {
 		util.Logger.Error(err)
 		c.JSON(200, gin.H{

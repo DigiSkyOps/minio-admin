@@ -2,6 +2,11 @@
 
 # minio-admin
 
+[中文](README-ZH.md)
+
+## ScreenShot
+![avatar](media/en.png)
+
 ## Description
 Minio-admin is a management tool for minio users and policies, which has been changed from the native command line mode of minio to a simple and convenient UI interface. The project is divided into front and rear end projects, front end vue, and back end golang gin.
   

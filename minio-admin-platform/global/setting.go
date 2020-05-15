@@ -1,4 +1,4 @@
-package util
+package global
 import (
 	"github.com/go-ini/ini"
 	"log"
@@ -32,7 +32,6 @@ func init() {
 	LoadBase()
 	LoadServer()
 	LoadMinio()
-	InitMinioClient()
 }
 func LoadBase() {
 	Setting.RunMode = Cfg.Section("").Key("RUN_MODE").MustString("debug")
