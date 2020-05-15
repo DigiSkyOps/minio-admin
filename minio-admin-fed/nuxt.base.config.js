@@ -13,7 +13,7 @@ module.exports = {
         platformUrl: process.env.PLATFORM_URL || 'http://localhost:9000'
     },
     head: {
-        title: '',
+        title: 'minio-admin',
         meta: [
             {
                 charset: 'utf-8'
