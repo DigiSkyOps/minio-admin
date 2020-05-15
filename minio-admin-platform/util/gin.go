@@ -10,10 +10,10 @@ var (
 )
 
 func init(){
-	Engine = InitGin(LoggerHandler(InitLogger()))
+	Engine = initGin(LoggerHandler(InitLogger()))
 }
 
-func InitGin(LoggerHandler gin.HandlerFunc) *gin.Engine {
+func initGin(LoggerHandler gin.HandlerFunc) *gin.Engine {
 	engine := gin.New()
 	engine.Use(LoggerHandler)
 	engine.Use(middleware.Cors())

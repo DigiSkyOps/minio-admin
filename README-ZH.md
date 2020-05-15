@@ -2,6 +2,9 @@
 
 # minio-admin
 
+## ScreenShot
+![avatar](media/zh.png)
+
 ## 项目介绍
 minio-admin 是一个用于 minio 用户及策略的管理工具，由 minio 原生的命令行方式变为操作简单方便的UI界面方式,该项目为前后端分离项目，前端vue，后端golang gin。
   

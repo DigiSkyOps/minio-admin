@@ -1,15 +1,15 @@
 package user
 
 import (
-	"fmt"
 	"context"
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/minio/minio/pkg/madmin"
 	"minio-admin/util"
 )
 
 var (
-	MinioClient *madmin.AdminClient
+	Admin *madmin.AdminClient
 )
 //const (
 //	AccountEnabled  AccountStatus = "enabled"
@@ -21,43 +21,23 @@ type AddUserInfo struct {
 	SecretKey string	`json:"secretKey" binding:"required"`
 }
 
-
 type DelUserInfo struct {
 	AccessKey string	`json:"accessKey" binding:"required"`
 }
+
 type SetUserInfo struct {
 	AccessKey string		`json:"accessKey" binding:"required"`
 	SecretKey string		`json:"secretKey" binding:"required"`
 	Status    madmin.AccountStatus	`json:"status" binding:"required"`
 }
 
-
-
 type SetUserStatusInfo struct {
 	AccessKey string		`json:"accessKey" binding:"required"`
 	Status    madmin.AccountStatus	`json:"status" binding:"required"`
 }
 
-
-func init(){
-	MinioClient = initMinioClient()
-}
-
-func initMinioClient() *madmin.AdminClient{
-	madmClnt, err := madmin.New(util.Setting.MinioEndpoint,util.Setting.AccessKey, util.Setting.SecretKey,false)
-	if err != nil {
-		fmt.Println(err)
-		util.Logger.Error(err)
-	}
-	return madmClnt
-}
-
-
-
 func ListUser(c *gin.Context){
-	ctx := context.Background()
-	users, err := MinioClient.ListUsers(ctx)
-
+	users, err := util.MinioClient.Admin.ListUsers(context.Background())
 	if err != nil {
 		util.Logger.Error(err)
 		c.JSON(200, gin.H{
@@ -73,11 +53,9 @@ func ListUser(c *gin.Context){
 }
 
 func GetUserInfo(c *gin.Context){
-	ctx := context.Background()
 	var accessKey string
 	accessKey = c.Query("accessKey")
-	userInfo, err := MinioClient.GetUserInfo(ctx,accessKey)
-
+	userInfo, err := util.MinioClient.Admin.GetUserInfo(context.Background(),accessKey)
 	if err != nil {
 		util.Logger.Error(err)
 		c.JSON(200, gin.H{
@@ -103,8 +81,7 @@ func AddUser(c *gin.Context){
 		})
 		return
 	}
-	ctx := context.Background()
-	err := MinioClient.AddUser(ctx,addUserInfo.AccessKey ,addUserInfo.SecretKey)
+	err := util.MinioClient.Admin.AddUser(context.Background(),addUserInfo.AccessKey ,addUserInfo.SecretKey)
 	if err != nil {
 		util.Logger.Error(err)
 		c.JSON(200, gin.H{
@@ -132,8 +109,7 @@ func SetUser(c *gin.Context){
 		})
 		return
 	}
-	ctx := context.Background()
-	err := MinioClient.SetUser(ctx,setUserInfo.AccessKey,setUserInfo.SecretKey,setUserInfo.Status)
+	err := util.MinioClient.Admin.SetUser(context.Background(),setUserInfo.AccessKey,setUserInfo.SecretKey,setUserInfo.Status)
 	if err != nil {
 		util.Logger.Error(err.Error())
 		c.JSON(200, gin.H{
@@ -158,8 +134,7 @@ func SetUserStatus(c *gin.Context){
 		})
 		return
 	}
-	ctx := context.Background()
-	err := MinioClient.SetUserStatus(ctx,setUserStatusInfo.AccessKey,setUserStatusInfo.Status)
+	err := util.MinioClient.Admin.SetUserStatus(context.Background(),setUserStatusInfo.AccessKey,setUserStatusInfo.Status)
 	if err != nil {
 		util.Logger.Error(err.Error())
 		c.JSON(200, gin.H{
@@ -186,8 +161,7 @@ func DelUser(c *gin.Context){
 		})
 		return
 	}
-	ctx := context.Background()
-	err := MinioClient.RemoveUser(ctx,delUserInfo.AccessKey)
+	err := util.MinioClient.Admin.RemoveUser(context.Background(),delUserInfo.AccessKey)
 	if err != nil {
 		util.Logger.Error(err)
 		c.JSON(200, gin.H{
