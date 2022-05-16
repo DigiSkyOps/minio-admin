@@ -3,7 +3,7 @@ module minio-admin
 go 1.13
 
 require (
-	github.com/gin-gonic/gin v1.6.1
+	github.com/gin-gonic/gin v1.7.0
 	github.com/go-ini/ini v1.55.0
 	github.com/golang/protobuf v1.3.5 // indirect
 	github.com/minio/minio v0.0.0-20200327040739-0c80bf45d005
