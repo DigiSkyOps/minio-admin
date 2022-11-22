@@ -25,7 +25,7 @@
         "element-ui": "~2.10.1",
         "js-base64": "^2.5.2",
         "json-beautify": "^1.1.1",
-        "nuxt": "^2.12.2",
+        "nuxt": "^2.15.8",
         "v-jsoneditor": "^1.2.3",
         "vue-i18n": "^8.17.5",
         "vue-json-editor": "^1.4.0",
