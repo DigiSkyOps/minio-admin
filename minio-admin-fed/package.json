@@ -25,7 +25,7 @@
         "element-ui": "~2.10.1",
         "js-base64": "^2.5.2",
         "json-beautify": "^1.1.1",
-        "nuxt": "^2.12.2",
+        "nuxt": "^3.0.0",
         "v-jsoneditor": "^1.2.3",
         "vue-i18n": "^8.17.5",
         "vue-json-editor": "^1.4.0",
@@ -36,8 +36,8 @@
     "devDependencies": {
         "axios-retry": "3.0.2",
         "less": "^3.10.3",
-        "less-loader": "^5.0.0",
-        "vue-loader": "^15.7.1",
+        "less-loader": "^11.1.0",
+        "vue-loader": "^17.0.1",
         "webpack-merge": "^4.1.2"
     }
 }
